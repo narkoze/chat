@@ -1,0 +1,15 @@
+// 1. Global
+// ---------
+@import 'vendor/normalize';
+@import 'global';
+@include foundation-global-styles;
+
+// 3. The Grid
+// -----------
+@import 'grid/grid';
+@include foundation-grid;
+
+// 11. Button
+// ----------
+@import 'components/button';
+@include foundation-button;

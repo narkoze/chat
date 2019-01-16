@@ -1,5 +1,5 @@
 export default {
-  increment (state, payload) {
-    state.count += payload
+  increment (state, count) {
+    state.count += count
   }
 }

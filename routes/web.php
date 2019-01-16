@@ -12,3 +12,5 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::apiResource('increment', 'IncrementController');

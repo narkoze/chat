@@ -9,3 +9,12 @@
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::post('signup', 'Auth\RegisterController@register');
+Route::post('signin', 'AuthController@signin');
+
+Route::group([
+    'middleware' => 'auth:api',
+], function () {
+    Route::get('signout', 'AuthController@signout');
+});

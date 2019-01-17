@@ -18,3 +18,16 @@ mix
       'node_modules/foundation-sites/scss',
     ]
   })
+
+if (mix.inProduction()) {
+  mix.version()
+} else {
+  mix.browserSync({
+    proxy: 'chat.test',
+    open: false,
+    files: [
+      'resources/js/*',
+      'resources/sass/*',
+    ]
+  })
+}

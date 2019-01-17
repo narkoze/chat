@@ -1,6 +1,8 @@
 <template>
-  <div class="row">
-    <div class="columns small-3 small-centered">
+  <div>
+    <router-view></router-view>
+
+    <div>
       {{ count }}
       <a
         @click="increment(1)"

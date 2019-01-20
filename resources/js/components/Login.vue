@@ -248,7 +248,6 @@
 <style lang="scss" scoped>
   .login {
     background: url('/img/background.jpg') no-repeat center center fixed;
-    background-color: #53575a;
     background-size: cover;
 
     height: 100vh;

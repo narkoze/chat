@@ -1,15 +1,42 @@
-// 1. Global
+// 0. Dependencies
 // ---------
 @import 'vendor/normalize';
+@import '../_vendor/sassy-lists/stylesheets/helpers/missing-dependencies';
+@import '../_vendor/sassy-lists/stylesheets/helpers/true';
+@import '../_vendor/sassy-lists/stylesheets/functions/contain';
+@import '../_vendor/sassy-lists/stylesheets/functions/purge';
+@import '../_vendor/sassy-lists/stylesheets/functions/remove';
+@import '../_vendor/sassy-lists/stylesheets/functions/replace';
+@import '../_vendor/sassy-lists/stylesheets/functions/to-list';
+
+// 1. Global
+// ---------
 @import 'global';
 @include foundation-global-styles;
+@import 'forms/forms';
+@include foundation-forms;
+@import 'typography/typography';
+@include foundation-typography;
 
 // 3. The Grid
 // -----------
-@import 'grid/grid';
-@include foundation-grid;
+@import 'xy-grid/xy-grid';
+@include foundation-xy-grid-classes;
 
 // 11. Button
 // ----------
 @import 'components/button';
 @include foundation-button;
+
+// 14. Card
+// ----------
+@import 'components/card';
+@include foundation-card;
+
+// Helpers
+// ----------
+@import 'prototype/prototype';
+@include foundation-prototype-rounded;
+@include foundation-prototype-bordered;
+@include foundation-prototype-shadow;
+@include foundation-prototype-separator;

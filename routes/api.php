@@ -10,11 +10,11 @@
 |
 */
 
-Route::post('signup', 'Auth\RegisterController@register');
-Route::post('signin', 'AuthController@signin');
+Route::post('register', 'Auth\RegisterController@register');
+Route::post('login', 'AuthController@login');
 
 Route::group([
     'middleware' => 'auth:api',
 ], function () {
-    Route::get('signout', 'AuthController@signout');
+    Route::get('logout', 'AuthController@logout');
 });

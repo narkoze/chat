@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Services\AuthService;
 use App\UserResource;
 use App\User;
 
@@ -41,11 +42,12 @@ class RegisterController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function register(Request $request)
+    public function register(Request $request, AuthService $authServ)
     {
         $this->validator($request->all())->validate();
+        $this->create($request->all());
 
-        return response()->json($this->create($request->all()));
+        return response()->json($authServ->login($request->email, $request->password));
     }
 
     /**

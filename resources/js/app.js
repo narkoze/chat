@@ -1,40 +1,38 @@
-import actions from './actions'
-import Chat from './components/chat.vue'
-import Echo from 'laravel-echo'
-import getters from './getters'
-import icons from './icons'
-import mutations from './mutations'
-import routes from './routes'
-import state from './state'
 import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Vuex from 'vuex'
-
-Vue.use(Vuex)
-Vue.use(VueRouter)
+import router from './router'
+import store from './store'
+import Chat from './components/Chat.vue'
+// import Echo from 'laravel-echo'
+import icons from './icons'
 
 Vue.component('font-awesome-icon', icons)
 
-window.io = require('socket.io-client')
-
-Vue.prototype.$echo = channel => new Echo({
-  broadcaster: 'socket.io',
-  host: `${window.location.hostname}:6001`
-}).channel(channel)
+// window.io = require('socket.io-client')
+// window.Echo = new Echo({
+//   broadcaster: 'socket.io',
+//   host: `${window.location.hostname}:6001`
+// })
 
 export default new Vue({
-  el: '#chat',
-  router: new VueRouter({
-    mode: 'history',
-    routes
-  }),
-  store: new Vuex.Store({
-    state,
-    getters,
-    actions,
-    mutations
-  }),
+  el: '#Chat',
+  router: router,
+  store: store,
   components: {
     Chat
+  },
+  created () {
+    let tokenStorage = localStorage.getItem('token')
+    if (tokenStorage) {
+      let user = JSON.parse(localStorage.getItem('user'))
+      let token = JSON.parse(tokenStorage)
+      let bearer = `${token.token_type} ${token.access_token}`
+
+      axios.defaults.headers.common.Authorization = bearer
+
+      this.$store.commit('SET_AUTH', {
+        user,
+        bearer
+      })
+    }
   }
 })

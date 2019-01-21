@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import router from './router'
 import store from './store'
-import Chat from './components/Chat.vue'
+import Window from './components/Window.vue'
 // import Echo from 'laravel-echo'
 import icons from './icons'
 
@@ -18,7 +18,7 @@ export default new Vue({
   router: router,
   store: store,
   components: {
-    Chat
+    Window
   },
   created () {
     let tokenStorage = localStorage.getItem('token')

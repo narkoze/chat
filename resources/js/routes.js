@@ -1,5 +1,5 @@
 import Login from './components/Login.vue'
-import LoggedIn from './components/LoggedIn.vue'
+import Chat from './components/Chat.vue'
 
 export default [
   {
@@ -12,8 +12,8 @@ export default [
     component: Login
   },
   {
-    name: 'LoggedIn',
-    path: '/LoggedIn',
-    component: LoggedIn
+    name: 'Chat',
+    path: '/Chat',
+    component: Chat
   },
 ]

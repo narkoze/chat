@@ -64,7 +64,7 @@ export default {
       bearer
     })
 
-    router.replace({ name: 'LoggedIn' })
+    router.replace({ name: 'Chat' })
   },
   async logout ({ dispatch, commit }) {
     commit('SET_LOGOUT_IN_PROGRESS', true)

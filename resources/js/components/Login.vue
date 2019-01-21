@@ -1,6 +1,6 @@
 <template>
   <div class="grid-x login">
-    <div class="cell large-5 medium-4"></div>
+    <div class="cell large-5 medium-4 show-for-large"></div>
 
     <div class="cell large-2 medium-4 login-card">
       <h2 class="separator-center">
@@ -249,22 +249,34 @@
   .login {
     background: url('/img/background.jpg') no-repeat center center fixed;
     background-size: cover;
-
     height: 100vh;
-    padding-top: 52px;
 
-    h2.separator-center {
+    h2 {
       padding-bottom: 26px;
+    }
+    .card {
+      background-color: rgba(255, 255, 255, 0.9);
     }
     .login-card {
       min-width: 315px;
-
-      .card {
-        background-color: rgba(255, 255, 255, 0.9);
-      }
+      margin: 0 19px;
     }
     .login-back {
       padding: 0;
+    }
+
+    @media screen and (max-width: 39.9375em) {
+      padding-top: 26px;
+
+      h3 {
+        text-align: center;
+      }
+      .login-card.cell {
+        flex: 0;
+      }
+    }
+    @media screen and (min-width: 40em) {
+      padding-top: 52px;
     }
   }
 </style>

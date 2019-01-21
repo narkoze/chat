@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
   </head>
   <body>
-    <Chat id="Chat"></Chat>
+    <Window id="Chat"></Window>
     <script src="{{ mix('js/app.js') }}"></script>
   </body>
 </html>

@@ -8,6 +8,12 @@ export default {
   SET_REGISTER_IN_PROGRESS (state, boolean) {
     state.registerInProgress = boolean
   },
+  SET_GET_MESSAGES_IN_PROGRESS (state, boolean) {
+    state.getMessagesInProgress = boolean
+  },
+  SET_SEND_MESSAGE_IN_PROGRESS (state, boolean) {
+    state.sendMessageInProgress = boolean
+  },
   SET_EMAIL (state, email) {
     state.auth.email = email
   },
@@ -70,5 +76,26 @@ export default {
   },
   SET_GLOBAL_ERROR (state, error) {
     state.errorGlobal = error
+  },
+  SET_USERS (state, users) {
+    state.users = users
+  },
+  PUSH_USER (state, user) {
+    state.users.push(user)
+  },
+  REMOVE_USER (state, user) {
+    state.users = state.users.filter(users => users.id !== user.id)
+  },
+  SET_MESSAGE (state, message) {
+    state.auth.message = message
+  },
+  SET_MESSAGES (state, messages) {
+    state.messages = messages
+  },
+  PUSH_MESSAGE (state, message) {
+    state.messages.push(message)
+  },
+  CLEAR_MESSAGE (state) {
+    state.message = {}
   }
 }

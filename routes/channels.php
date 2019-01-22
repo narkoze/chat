@@ -10,6 +10,8 @@
 |
 */
 
-Broadcast::channel('my-channel', function () {
-    return true;
+use App\UserResource;
+
+Broadcast::channel('chat', function ($user) {
+    return new UserResource($user);
 });

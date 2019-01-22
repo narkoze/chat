@@ -9,21 +9,23 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use App\Message;
+use App\MessageResource;
 
-class MyEvent implements ShouldBroadcast
+class MessageEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $count;
+    public $message;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($count)
+    public function __construct(Message $message)
     {
-        $this->count = $count;
+        $this->message = new MessageResource($message);
     }
 
     /**
@@ -33,6 +35,6 @@ class MyEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('my-channel');
+        return new PresenceChannel('chat');
     }
 }

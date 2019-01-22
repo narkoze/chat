@@ -11,6 +11,11 @@ export default {
   registerInProgress: false,
   loginInProgress: false,
   logoutInProgress: false,
+  getMessagesInProgress: false,
+  sendMessageInProgress: false,
+  users: [],
+  messages: [],
+  message: {},
   errorGlobal: null,
   errorEmail: null,
   errors: {}

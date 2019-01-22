@@ -1,7 +1,5 @@
 import router from './router'
-
-window.axios = require('axios');
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+import axios from 'axios'
 
 export default {
   async login ({ state, dispatch, commit }) {
@@ -49,7 +47,7 @@ export default {
 
     commit('SET_REGISTER_IN_PROGRESS', false)
   },
-  loggedIn ({ commit }, data) {
+  loggedIn ({ dispatch, commit }, data) {
     let user = data.user
     let token = data.token
     let bearer = `${token.token_type} ${token.access_token}`
@@ -57,12 +55,11 @@ export default {
     localStorage.setItem('user', JSON.stringify(user))
     localStorage.setItem('token', JSON.stringify(token))
 
-    window.axios.defaults.headers.common.Authorization = bearer
+    axios.defaults.headers.common.Authorization = bearer
+    window.Echo.options.auth.headers.Authorization = bearer
 
-    commit('SET_AUTH', {
-      user,
-      bearer
-    })
+    commit('SET_AUTH', { user, bearer })
+    dispatch('listenChat')
 
     router.replace({ name: 'Chat' })
   },
@@ -72,7 +69,10 @@ export default {
     await axios
       .get('api/logout')
       .then(() => {
+        window.Echo.leave('chat')
+
         delete axios.defaults.headers.common.Authorization
+        delete window.Echo.options.auth.headers.Authorization
 
         localStorage.removeItem('user')
         localStorage.removeItem('token')
@@ -87,7 +87,55 @@ export default {
 
     commit('SET_LOGOUT_IN_PROGRESS', false)
   },
-  handleErrors({ commit }, error) {
+  listenChat ({ commit }) {
+    window.Echo
+      .join('chat')
+      .here(users => {
+        commit('SET_USERS', users)
+      })
+      .joining(user => {
+        commit('PUSH_USER', user)
+      })
+      .leaving(user => {
+        commit('REMOVE_USER', user)
+      })
+      .listen('MessageEvent', ({ message }) => {
+        commit('PUSH_MESSAGE', message)
+      })
+  },
+  async getMessages ({ dispatch, commit }) {
+    commit('SET_GET_MESSAGES_IN_PROGRESS', true)
+
+    await axios
+      .get('api/message')
+      .then(response => {
+        commit('SET_MESSAGES', response.data.data)
+      })
+      .catch(error => {
+        dispatch('handleErrors', error)
+      })
+
+    commit('SET_GET_MESSAGES_IN_PROGRESS', false)
+  },
+  async sendMessage ({ state, dispatch, commit }) {
+    commit('SET_SEND_MESSAGE_IN_PROGRESS', true)
+    commit('CLEAR_ERRORS')
+
+    await axios
+      .post('api/message', {
+        content: state.message.content
+      })
+      .then(response => {
+        commit('PUSH_MESSAGE', response.data.data)
+        commit('CLEAR_MESSAGE')
+      })
+      .catch(error => {
+        dispatch('handleErrors', error)
+      })
+
+    commit('SET_SEND_MESSAGE_IN_PROGRESS', false)
+  },
+  handleErrors ({ commit }, error) {
     switch (error.response.status) {
       case 401:
         router.replace({ name: 'Login' })

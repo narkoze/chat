@@ -33,8 +33,10 @@ export default new Vue({
       let token = JSON.parse(tokenStorage)
       let bearer = `${token.token_type} ${token.access_token}`
 
-      axios.defaults.headers.common.Authorization = bearer
       window.Echo.options.auth.headers.Authorization = bearer
+
+      axios.defaults.headers.common.Authorization = bearer
+      axios.defaults.headers.common['X-Socket-ID'] = window.Echo.socketId(),
 
       this.$store.commit('SET_AUTH', { user, bearer })
       this.$store.dispatch('listenChat')

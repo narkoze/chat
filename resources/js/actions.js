@@ -55,8 +55,10 @@ export default {
     localStorage.setItem('user', JSON.stringify(user))
     localStorage.setItem('token', JSON.stringify(token))
 
-    axios.defaults.headers.common.Authorization = bearer
     window.Echo.options.auth.headers.Authorization = bearer
+
+    axios.defaults.headers.common.Authorization = bearer
+    axios.defaults.headers.common['X-Socket-ID'] = window.Echo.socketId(),
 
     commit('SET_AUTH', { user, bearer })
     dispatch('listenChat')
@@ -71,8 +73,10 @@ export default {
       .then(() => {
         window.Echo.leave('chat')
 
-        delete axios.defaults.headers.common.Authorization
         delete window.Echo.options.auth.headers.Authorization
+
+        delete axios.defaults.headers.common.Authorization
+        delete axios.defaults.headers.common['X-Socket-ID']
 
         localStorage.removeItem('user')
         localStorage.removeItem('token')

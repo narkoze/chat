@@ -26,6 +26,8 @@ class MessageEvent implements ShouldBroadcast
     public function __construct(Message $message)
     {
         $this->message = new MessageResource($message);
+
+        $this->dontBroadcastToCurrentUser();
     }
 
     /**

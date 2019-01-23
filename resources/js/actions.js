@@ -56,9 +56,7 @@ export default {
     localStorage.setItem('token', JSON.stringify(token))
 
     window.Echo.options.auth.headers.Authorization = bearer
-
     axios.defaults.headers.common.Authorization = bearer
-    axios.defaults.headers.common['X-Socket-ID'] = window.Echo.socketId(),
 
     commit('SET_AUTH', { user, bearer })
     dispatch('listenChat')
@@ -96,6 +94,9 @@ export default {
       .join('chat')
       .here(users => {
         commit('SET_USERS', users)
+
+        // Temporary
+        axios.defaults.headers.common['X-Socket-ID'] = window.Echo.socketId()
       })
       .joining(user => {
         commit('PUSH_USER', user)

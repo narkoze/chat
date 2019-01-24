@@ -1,10 +1,10 @@
 {
-	"authHost": "http://localhost:8000",
+	"authHost": "http://chat.test",
 	"authEndpoint": "/broadcasting/auth",
 	"clients": [
 		{
-			"appId": "64b35fa80c74d63e",
-			"key": "93839c9384c03ac633bc4573844a6c92"
+			"appId": "45f4084b25394663",
+			"key": "e2d33de51ef0fb7c13d30dd29fc3d738"
 		}
 	],
 	"database": "redis",
@@ -15,7 +15,7 @@
 		}
 	},
 	"devMode": true,
-	"host": null,
+	"host": "chat.test",
 	"port": "6001",
 	"protocol": "http",
 	"socketio": {},
@@ -28,7 +28,7 @@
 		"redis": true
 	},
 	"apiOriginAllow": {
-		"allowCors": false,
+        "allowCors": false,
 		"allowOrigin": "",
 		"allowMethods": "",
 		"allowHeaders": ""

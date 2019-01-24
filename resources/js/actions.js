@@ -1,4 +1,5 @@
 import router from './router'
+import echo from './echo'
 import axios from 'axios'
 
 export default {
@@ -55,10 +56,12 @@ export default {
     localStorage.setItem('user', JSON.stringify(user))
     localStorage.setItem('token', JSON.stringify(token))
 
-    window.Echo.options.auth.headers.Authorization = bearer
+    echo.options.auth.headers.Authorization = bearer
     axios.defaults.headers.common.Authorization = bearer
 
     commit('SET_AUTH', { user, bearer })
+
+    dispatch('getMessages')
     dispatch('listenChat')
 
     router.replace({ name: 'Chat' })
@@ -69,9 +72,9 @@ export default {
     await axios
       .get('api/logout')
       .then(() => {
-        window.Echo.leave('chat')
+        echo.leave('chat')
 
-        delete window.Echo.options.auth.headers.Authorization
+        delete echo.options.auth.headers.Authorization
 
         delete axios.defaults.headers.common.Authorization
         delete axios.defaults.headers.common['X-Socket-ID']
@@ -90,13 +93,10 @@ export default {
     commit('SET_LOGOUT_IN_PROGRESS', false)
   },
   listenChat ({ commit }) {
-    window.Echo
+    echo
       .join('chat')
       .here(users => {
         commit('SET_USERS', users)
-
-        // Temporary
-        axios.defaults.headers.common['X-Socket-ID'] = window.Echo.socketId()
       })
       .joining(user => {
         commit('PUSH_USER', user)
@@ -127,9 +127,17 @@ export default {
     commit('CLEAR_ERRORS')
 
     await axios
-      .post('api/message', {
-        content: state.message.content
-      })
+      .post(
+        'api/message',
+        {
+          content: state.message.content
+        },
+        {
+          headers: {
+            'X-Socket-ID': echo.socketId()
+          }
+        }
+      )
       .then(response => {
         commit('PUSH_MESSAGE', response.data.data)
         commit('CLEAR_MESSAGE')

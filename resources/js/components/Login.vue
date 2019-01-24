@@ -1,8 +1,6 @@
 <template>
-  <div class="grid-x login">
-    <div class="cell large-5 medium-4 show-for-large"></div>
-
-    <div class="cell large-2 medium-4 login-card">
+  <div class="login">
+    <div class="login-card">
       <h2 class="separator-center">
         CHAT
       </h2>
@@ -247,6 +245,9 @@
 
 <style lang="scss" scoped>
   .login {
+    display: flex;
+    justify-content: center;
+
     background: url('/img/background.jpg') no-repeat center center fixed;
     background-size: cover;
     height: 100vh;
@@ -258,7 +259,7 @@
       background-color: rgba(255, 255, 255, 0.9);
     }
     .login-card {
-      min-width: 315px;
+      width: 315px;
       margin: 0 19px;
     }
     .login-back {
@@ -270,9 +271,6 @@
 
       h3 {
         text-align: center;
-      }
-      .login-card.cell {
-        flex: 0;
       }
     }
     @media screen and (min-width: 40em) {

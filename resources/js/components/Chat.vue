@@ -25,7 +25,7 @@
           :key="message.id"
         >
           {{ `${message.author.name}: ${message.content}` }}
-          <small>({{ message.created_at }})</small>
+          <small>({{ message.created_at | dateFormat }})</small>
         </div>
 
         <div class="grid-x">
@@ -34,6 +34,7 @@
               @keyup.enter="sendMessage"
               v-model="message.content"
               type="text"
+              ref="message.content"
             >
           </div>
           <div class="cell small-2">
@@ -57,8 +58,8 @@
   } from 'vuex'
 
   export default {
-    created () {
-      this.$store.dispatch('getMessages')
+    mounted () {
+      this.$refs['message.content'].focus()
     },
     computed: {
       ...mapState([

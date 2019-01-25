@@ -17,7 +17,9 @@ class MessageController extends Controller
      */
     public function index()
     {
-        return new MessageResourceCollection(Message::all());
+        $messages = Message::orderBy('created_at')->get();
+
+        return new MessageResourceCollection($messages);
     }
 
     /**

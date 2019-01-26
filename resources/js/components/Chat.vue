@@ -26,7 +26,7 @@
       </div>
 
       <div class="messages">
-        <div>
+        <div ref="messages">
           <div
             v-for="message in messages"
             :key="message.id"
@@ -67,6 +67,12 @@
   } from 'vuex'
 
   export default {
+    watch: {
+      messages () {
+        window.addEventListener('resize', this.scrollToBottom)
+        this.$nextTick(this.scrollToBottom)
+      }
+    },
     computed: {
       ...mapState([
         'auth',
@@ -86,7 +92,11 @@
       ...mapActions([
         'logout',
         'sendMessage',
-      ])
+      ]),
+      scrollToBottom () {
+        let messages = this.$refs.messages
+        messages.scrollTop = messages.scrollHeight - messages.clientHeight
+      }
     }
   }
 </script>
